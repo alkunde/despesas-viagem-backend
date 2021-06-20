@@ -26,4 +26,19 @@ public class CategoryService {
                         () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found")
                 );
     }
+
+    public Category save(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    public void delete(long id) {
+        categoryRepository.deleteById(id);
+    }
+
+    public void replace(Category category) {
+        Category categorySaved = findByIdOrThrowBadRequestException(category.getId());
+
+        category.setId(categorySaved.getId());
+        categoryRepository.save(category);
+    }
 }
