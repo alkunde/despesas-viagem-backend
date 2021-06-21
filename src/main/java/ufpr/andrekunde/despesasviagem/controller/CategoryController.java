@@ -28,11 +28,6 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.findByIdOrThrowBadRequestException(id));
     }
 
-    @GetMapping(path = "/find")
-    public ResponseEntity<List<Category>> findByDescription(@RequestParam(required = false) String description) {
-        return ResponseEntity.ok(categoryService.findByDescription(description));
-    }
-
     @PostMapping
     public ResponseEntity<Category> save(@RequestBody CategoryPostRequest categoryPostRequest) {
         return new ResponseEntity<>(categoryService.save(categoryPostRequest), HttpStatus.CREATED);
