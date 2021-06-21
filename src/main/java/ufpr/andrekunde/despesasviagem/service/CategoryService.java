@@ -31,7 +31,7 @@ public class CategoryService {
     }
 
     public Category save(CategoryPostRequest categoryPostRequest) {
-        Category category = Category.builder().description(categoryPostRequest.getDescription()).build();
+        Category category = CategoryMapper.INSTANCE.toCategory(categoryPostRequest);
 
         return categoryRepository.save(category);
     }
@@ -43,10 +43,8 @@ public class CategoryService {
     public void replace(CategoryPutRequest categoryPutRequest) {
         Category categorySaved = findByIdOrThrowBadRequestException(categoryPutRequest.getId());
 
-        Category category = Category.builder()
-                .id(categorySaved.getId())
-                .description(categoryPutRequest.getDescription())
-                .build();
+        Category category = CategoryMapper.INSTANCE.toCategory(categoryPutRequest);
+        category.setId(categorySaved.getId());
 
         categoryRepository.save(category);
     }

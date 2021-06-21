@@ -7,11 +7,11 @@ import ufpr.andrekunde.despesasviagem.requests.category.CategoryPostRequest;
 import ufpr.andrekunde.despesasviagem.requests.category.CategoryPutRequest;
 
 @Mapper
-public abstract class CategoryMapper {
+public interface CategoryMapper {
 
-    public static final CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
+    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
-    public abstract Category toCategory(CategoryPostRequest categoryPostRequest);
+    Category toCategory(CategoryPostRequest categoryPostRequest);
 
-    public abstract Category toCategory(CategoryPutRequest categoryPutRequest);
+    Category toCategory(CategoryPutRequest categoryPutRequest);
 }
