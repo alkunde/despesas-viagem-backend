@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ufpr.andrekunde.despesasviagem.domain.Category;
+import ufpr.andrekunde.despesasviagem.requests.category.CategoryPostRequest;
+import ufpr.andrekunde.despesasviagem.requests.category.CategoryPutRequest;
 import ufpr.andrekunde.despesasviagem.service.CategoryService;
 
 @RestController
@@ -25,8 +27,8 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> save(@RequestBody Category category) {
-        return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
+    public ResponseEntity<Category> save(@RequestBody CategoryPostRequest categoryPostRequest) {
+        return new ResponseEntity<>(categoryService.save(categoryPostRequest), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
@@ -37,8 +39,8 @@ public class CategoryController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Category category) {
-        categoryService.replace(category);
+    public ResponseEntity<Void> replace(@RequestBody CategoryPutRequest categoryPutRequest) {
+        categoryService.replace(categoryPutRequest);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

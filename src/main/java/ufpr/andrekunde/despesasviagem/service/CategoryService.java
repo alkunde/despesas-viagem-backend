@@ -5,7 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ufpr.andrekunde.despesasviagem.domain.Category;
+import ufpr.andrekunde.despesasviagem.mapper.CategoryMapper;
 import ufpr.andrekunde.despesasviagem.repository.CategoryRepository;
+import ufpr.andrekunde.despesasviagem.requests.category.CategoryPostRequest;
+import ufpr.andrekunde.despesasviagem.requests.category.CategoryPutRequest;
 
 import java.util.List;
 
@@ -27,18 +30,24 @@ public class CategoryService {
                 );
     }
 
-    public Category save(Category category) {
+    public Category save(CategoryPostRequest categoryPostRequest) {
+        Category category = Category.builder().description(categoryPostRequest.getDescription()).build();
+
         return categoryRepository.save(category);
     }
 
     public void delete(long id) {
-        categoryRepository.deleteById(id);
+        categoryRepository.delete(findByIdOrThrowBadRequestException(id));
     }
 
-    public void replace(Category category) {
-        Category categorySaved = findByIdOrThrowBadRequestException(category.getId());
+    public void replace(CategoryPutRequest categoryPutRequest) {
+        Category categorySaved = findByIdOrThrowBadRequestException(categoryPutRequest.getId());
 
-        category.setId(categorySaved.getId());
+        Category category = Category.builder()
+                .id(categorySaved.getId())
+                .description(categoryPutRequest.getDescription())
+                .build();
+
         categoryRepository.save(category);
     }
 }
