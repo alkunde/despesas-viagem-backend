@@ -9,6 +9,8 @@ import ufpr.andrekunde.despesasviagem.requests.category.CategoryPostRequest;
 import ufpr.andrekunde.despesasviagem.requests.category.CategoryPutRequest;
 import ufpr.andrekunde.despesasviagem.service.CategoryService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("categories")
 @RequiredArgsConstructor
@@ -24,6 +26,11 @@ public class CategoryController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<Category> findById(@PathVariable long id) {
         return ResponseEntity.ok(categoryService.findByIdOrThrowBadRequestException(id));
+    }
+
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Category>> findByDescription(@RequestParam(required = false) String description) {
+        return ResponseEntity.ok(categoryService.findByDescription(description));
     }
 
     @PostMapping
