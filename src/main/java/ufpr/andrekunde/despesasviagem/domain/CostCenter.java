@@ -3,22 +3,29 @@ package ufpr.andrekunde.despesasviagem.domain;
 import javax.persistence.*;
 
 @Entity
-public class Category {
+public class CostCenter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String code;
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
-    public Category() {
+    public CostCenter() {
     }
 
-    public Category(Long id, String description, Company company) {
+    public CostCenter(
+            Long id,
+            String code,
+            String description,
+            Company company
+    ) {
         this.id = id;
+        this.code = code;
         this.description = description;
         this.company = company;
     }
@@ -29,6 +36,14 @@ public class Category {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getDescription() {

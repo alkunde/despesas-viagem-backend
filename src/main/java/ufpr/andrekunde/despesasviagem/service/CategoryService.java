@@ -22,10 +22,6 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public List<Category> findByDescription(String description) {
-        return categoryRepository.findByDescription(description);
-    }
-
     public Category findByIdOrThrowBadRequestException(long id) {
         return categoryRepository
                 .findById(id)
