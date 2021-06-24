@@ -20,7 +20,7 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<?> list() {
-        return new ResponseEntity<>(categoryService.listAll(), HttpStatus.OK);
+        return ResponseEntity.ok(categoryService.listAll());
     }
 
     @GetMapping(path = "/{id}")

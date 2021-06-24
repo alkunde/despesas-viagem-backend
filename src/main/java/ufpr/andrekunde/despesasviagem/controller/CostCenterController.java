@@ -16,7 +16,7 @@ public class CostCenterController {
 
     @GetMapping
     public ResponseEntity<?> list() {
-        return new ResponseEntity<>(costCenterService.listAll(), HttpStatus.OK);
+        return ResponseEntity.ok(costCenterService.listAll());
     }
 
     @GetMapping(path = "/{id}")
