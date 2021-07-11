@@ -1,10 +1,9 @@
 package ufpr.andrekunde.despesasviagem.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import ufpr.andrekunde.despesasviagem.domain.CostCenter;
+import ufpr.andrekunde.despesasviagem.exception.BadRequestException;
 import ufpr.andrekunde.despesasviagem.repository.CostCenterRepository;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class CostCenterService {
         return costCenterRepository
                 .findById(id)
                 .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cost center not found")
+                        () -> new BadRequestException("Cost center not found")
                 );
     }
 

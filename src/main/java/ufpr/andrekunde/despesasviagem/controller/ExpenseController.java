@@ -1,13 +1,12 @@
 package ufpr.andrekunde.despesasviagem.controller;
 
+import com.oracle.tools.packager.Log;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ufpr.andrekunde.despesasviagem.domain.Expense;
 import ufpr.andrekunde.despesasviagem.service.ExpenseService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("expenses")
@@ -21,6 +20,11 @@ public class ExpenseController {
         return ResponseEntity.ok(expenseService.listAll());
     }
 
+    @GetMapping(path = "/user/{id}")
+    public ResponseEntity<?> listByUser(@PathVariable Long id) {
+        return ResponseEntity.ok(expenseService.listAllByUser(id));
+    }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<Expense> findById(@PathVariable Long id) {
         return ResponseEntity.ok(expenseService.findByIdOrThrowBadRequestException(id));
@@ -28,6 +32,9 @@ public class ExpenseController {
 
     @PostMapping
     public ResponseEntity<Expense> save(@RequestBody Expense expense) {
+        Log.info(expense.getDescription());
+        Log.info(expense.getCategory().toString());
+        Log.info(String.valueOf(expense.getAmount()));
         return new ResponseEntity<>(expenseService.save(expense), HttpStatus.CREATED);
     }
 
@@ -40,6 +47,7 @@ public class ExpenseController {
 
     @PutMapping
     public ResponseEntity<?> replace(@RequestBody Expense expense) {
+        Log.debug("Chegou");
         expenseService.replace(expense);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -1,10 +1,9 @@
 package ufpr.andrekunde.despesasviagem.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import ufpr.andrekunde.despesasviagem.domain.Company;
+import ufpr.andrekunde.despesasviagem.exception.BadRequestException;
 import ufpr.andrekunde.despesasviagem.mapper.CompanyMapper;
 import ufpr.andrekunde.despesasviagem.repository.CompanyRepository;
 import ufpr.andrekunde.despesasviagem.requests.company.CompanyPostRequest;
@@ -26,7 +25,7 @@ public class CompanyService {
         return companyRepository
                 .findById(id)
                 .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Company not found")
+                        () -> new BadRequestException("Company not found")
                 );
     }
 

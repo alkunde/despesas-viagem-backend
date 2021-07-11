@@ -1,10 +1,9 @@
 package ufpr.andrekunde.despesasviagem.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import ufpr.andrekunde.despesasviagem.domain.Travel;
+import ufpr.andrekunde.despesasviagem.exception.BadRequestException;
 import ufpr.andrekunde.despesasviagem.repository.TravelRepository;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class TravelService {
         return travelRepository
                 .findById(id)
                 .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Travel not found")
+                        () -> new BadRequestException("Travel not found")
                 );
     }
 

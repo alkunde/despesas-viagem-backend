@@ -1,10 +1,9 @@
 package ufpr.andrekunde.despesasviagem.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import ufpr.andrekunde.despesasviagem.domain.Expense;
+import ufpr.andrekunde.despesasviagem.exception.BadRequestException;
 import ufpr.andrekunde.despesasviagem.repository.ExpenseRepository;
 
 import java.util.List;
@@ -19,11 +18,15 @@ public class ExpenseService {
         return expenseRepository.findAll();
     }
 
+    public List<Expense> listAllByUser(Long id) {
+        return expenseRepository.findByUserId(id);
+    }
+
     public Expense findByIdOrThrowBadRequestException(Long id) {
         return expenseRepository
                 .findById(id)
                 .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Expense not found")
+                        () -> new BadRequestException("Expense not found")
                 );
     }
 

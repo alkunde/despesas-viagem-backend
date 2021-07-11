@@ -1,10 +1,9 @@
 package ufpr.andrekunde.despesasviagem.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import ufpr.andrekunde.despesasviagem.domain.Category;
+import ufpr.andrekunde.despesasviagem.exception.BadRequestException;
 import ufpr.andrekunde.despesasviagem.mapper.CategoryMapper;
 import ufpr.andrekunde.despesasviagem.repository.CategoryRepository;
 import ufpr.andrekunde.despesasviagem.requests.category.CategoryPostRequest;
@@ -26,7 +25,7 @@ public class CategoryService {
         return categoryRepository
                 .findById(id)
                 .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found")
+                        () -> new BadRequestException("Category not found")
                 );
     }
 
