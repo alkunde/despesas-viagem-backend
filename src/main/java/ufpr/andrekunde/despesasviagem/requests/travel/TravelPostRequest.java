@@ -1,54 +1,38 @@
-package ufpr.andrekunde.despesasviagem.domain;
+package ufpr.andrekunde.despesasviagem.requests.travel;
 
-import javax.persistence.*;
+import ufpr.andrekunde.despesasviagem.domain.User;
+
 import java.util.Date;
 
-@Entity
-public class Travel {
+public class TravelPostRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String origin;
     private String destination;
-    private @Temporal(TemporalType.DATE) Date departureDate;
-    private @Temporal(TemporalType.DATE) Date arrivalDate;
-    private double advancedAmount;
+    private Date departureDate;
+    private Date arrivalDate;
     private String reason;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    private Double advancedAmout;
     private User user;
 
-    public Travel() {
+    public TravelPostRequest() {
     }
 
-    public Travel(
-            Long id,
+    public TravelPostRequest(
             String origin,
             String destination,
             Date departureDate,
             Date arrivalDate,
-            double advancedAmount,
             String reason,
+            Double advancedAmout,
             User user
     ) {
-        this.id = id;
         this.origin = origin;
         this.destination = destination;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
-        this.advancedAmount = advancedAmount;
         this.reason = reason;
+        this.advancedAmout = advancedAmout;
         this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getOrigin() {
@@ -83,20 +67,20 @@ public class Travel {
         this.arrivalDate = arrivalDate;
     }
 
-    public double getAdvancedAmount() {
-        return advancedAmount;
-    }
-
-    public void setAdvancedAmount(double advancedAmount) {
-        this.advancedAmount = advancedAmount;
-    }
-
     public String getReason() {
         return reason;
     }
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public Double getAdvancedAmout() {
+        return advancedAmout;
+    }
+
+    public void setAdvancedAmout(Double advancedAmout) {
+        this.advancedAmout = advancedAmout;
     }
 
     public User getUser() {

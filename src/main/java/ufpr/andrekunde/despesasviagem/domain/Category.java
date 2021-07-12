@@ -10,17 +10,12 @@ public class Category {
     private Long id;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
-
     public Category() {
     }
 
-    public Category(Long id, String description, Company company) {
+    public Category(Long id, String description) {
         this.id = id;
         this.description = description;
-        this.company = company;
     }
 
     public Long getId() {
@@ -39,11 +34,4 @@ public class Category {
         this.description = description;
     }
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
 }

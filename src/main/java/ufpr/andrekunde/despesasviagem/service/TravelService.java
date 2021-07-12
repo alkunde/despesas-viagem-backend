@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ufpr.andrekunde.despesasviagem.domain.Travel;
 import ufpr.andrekunde.despesasviagem.exception.BadRequestException;
+import ufpr.andrekunde.despesasviagem.mapper.TravelMapper;
 import ufpr.andrekunde.despesasviagem.repository.TravelRepository;
+import ufpr.andrekunde.despesasviagem.requests.travel.TravelPostRequest;
 
 import java.util.List;
 
@@ -26,7 +28,9 @@ public class TravelService {
                 );
     }
 
-    public Travel save(Travel travel) {
+    public Travel save(TravelPostRequest travelPostRequest) {
+        Travel travel = TravelMapper.INSTANCE.toTravel(travelPostRequest);
+
         return travelRepository.save(travel);
     }
 

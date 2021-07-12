@@ -1,6 +1,5 @@
 package ufpr.andrekunde.despesasviagem.controller;
 
-import com.oracle.tools.packager.Log;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +31,6 @@ public class ExpenseController {
 
     @PostMapping
     public ResponseEntity<Expense> save(@RequestBody Expense expense) {
-        Log.info(expense.getDescription());
-        Log.info(expense.getCategory().toString());
-        Log.info(String.valueOf(expense.getAmount()));
         return new ResponseEntity<>(expenseService.save(expense), HttpStatus.CREATED);
     }
 
@@ -47,7 +43,6 @@ public class ExpenseController {
 
     @PutMapping
     public ResponseEntity<?> replace(@RequestBody Expense expense) {
-        Log.debug("Chegou");
         expenseService.replace(expense);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

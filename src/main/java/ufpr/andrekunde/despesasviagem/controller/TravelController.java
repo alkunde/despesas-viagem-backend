@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ufpr.andrekunde.despesasviagem.domain.Travel;
+import ufpr.andrekunde.despesasviagem.requests.travel.TravelPostRequest;
 import ufpr.andrekunde.despesasviagem.service.TravelService;
 
 @RestController
@@ -25,8 +26,8 @@ public class TravelController {
     }
 
     @PostMapping
-    public ResponseEntity<Travel> save(Travel travel) {
-        return new ResponseEntity<>(travelService.save(travel), HttpStatus.CREATED);
+    public ResponseEntity<Travel> save(@RequestBody TravelPostRequest travelPostRequest) {
+        return new ResponseEntity<>(travelService.save(travelPostRequest), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
