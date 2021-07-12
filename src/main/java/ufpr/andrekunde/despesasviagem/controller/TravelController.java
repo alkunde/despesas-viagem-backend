@@ -20,6 +20,11 @@ public class TravelController {
         return ResponseEntity.ok(travelService.listAll());
     }
 
+    @GetMapping(path = "/user/{id}")
+    public ResponseEntity<?> listByUser(@PathVariable Long id) {
+        return ResponseEntity.ok(travelService.listAllByUser(id));
+    }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<Travel> findById(@PathVariable Long id) {
         return ResponseEntity.ok(travelService.findByIdOrThrowBadRequestException(id));

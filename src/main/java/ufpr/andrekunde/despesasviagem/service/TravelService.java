@@ -20,6 +20,10 @@ public class TravelService {
         return travelRepository.findAll();
     }
 
+    public List<Travel> listAllByUser(Long id) {
+        return travelRepository.findByUserId(id);
+    }
+
     public Travel findByIdOrThrowBadRequestException(Long id) {
         return travelRepository
                 .findById(id)
