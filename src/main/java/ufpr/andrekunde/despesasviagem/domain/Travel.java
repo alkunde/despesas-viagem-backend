@@ -15,6 +15,7 @@ public class Travel {
     private @Temporal(TemporalType.DATE) Date arrivalDate;
     private double advancedAmount;
     private String reason;
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -31,6 +32,7 @@ public class Travel {
             Date arrivalDate,
             double advancedAmount,
             String reason,
+            String status,
             User user
     ) {
         this.id = id;
@@ -40,6 +42,7 @@ public class Travel {
         this.arrivalDate = arrivalDate;
         this.advancedAmount = advancedAmount;
         this.reason = reason;
+        this.status = status;
         this.user = user;
     }
 
@@ -97,6 +100,14 @@ public class Travel {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public User getUser() {
