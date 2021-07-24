@@ -22,6 +22,10 @@ public class Expense {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "travel_id")
+    private Travel travel;
+
     public Expense() {
     }
 
@@ -39,6 +43,20 @@ public class Expense {
         this.description = description;
         this.category = category;
         this.user = user;
+    }
+
+    public Expense(
+            Long id,
+            Date expenseDate,
+            double amount,
+            String description,
+            Category category,
+            User user,
+            Travel travel
+    ) {
+        this(id, expenseDate, amount, description, category, user);
+
+        this.travel = travel;
     }
 
     public Long getId() {
@@ -87,5 +105,13 @@ public class Expense {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Travel getTravel() {
+        return travel;
+    }
+
+    public void setTravel(Travel travel) {
+        this.travel = travel;
     }
 }

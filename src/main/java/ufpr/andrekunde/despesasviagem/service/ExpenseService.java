@@ -22,6 +22,14 @@ public class ExpenseService {
         return expenseRepository.findByUserId(id);
     }
 
+    public List<Expense> listAllByTravel(Long id) {
+        return expenseRepository.findByTravelId(id);
+    }
+
+    public List<Expense> listWithoutTravel() {
+        return expenseRepository.findWithoutTravel();
+    }
+
     public Expense findByIdOrThrowBadRequestException(Long id) {
         return expenseRepository
                 .findById(id)
@@ -39,6 +47,13 @@ public class ExpenseService {
     }
 
     public void replace(Expense expense) {
+        expenseRepository.save(expense);
+    }
+
+    public void clearTravel(Long id) {
+        Expense expense = expenseRepository.getById(id);
+        expense.setTravel(null);
+
         expenseRepository.save(expense);
     }
 }

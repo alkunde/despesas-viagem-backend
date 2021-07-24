@@ -48,4 +48,14 @@ public class TravelController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping(path = "/{id}/to-approval")
+    public ResponseEntity<?> travelToApproval(@PathVariable Long id) {
+        Travel travel = travelService.findByIdOrThrowBadRequestException(id);
+        travel.setStatus("em aprovacao");
+
+        travelService.replace(travel);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

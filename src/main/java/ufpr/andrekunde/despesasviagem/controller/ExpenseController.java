@@ -24,6 +24,16 @@ public class ExpenseController {
         return ResponseEntity.ok(expenseService.listAllByUser(id));
     }
 
+    @GetMapping(path = "/travel/{id}")
+    public ResponseEntity<?> listByTravel(@PathVariable Long id) {
+        return ResponseEntity.ok(expenseService.listAllByTravel(id));
+    }
+
+    @GetMapping(path = "/no-travel")
+    public ResponseEntity<?> listWithoutTravel() {
+        return ResponseEntity.ok(expenseService.listWithoutTravel());
+    }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<Expense> findById(@PathVariable Long id) {
         return ResponseEntity.ok(expenseService.findByIdOrThrowBadRequestException(id));
@@ -46,5 +56,17 @@ public class ExpenseController {
         expenseService.replace(expense);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping(path = "/{id}/clear-travel")
+    public ResponseEntity<?> clearTravel(@PathVariable Long id) {
+//        Expense expense = expenseService.findByIdOrThrowBadRequestException(id);
+//
+//        if (!expense.getTravel().getStatus().equals("aberto")) {
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
+        expenseService.clearTravel(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
