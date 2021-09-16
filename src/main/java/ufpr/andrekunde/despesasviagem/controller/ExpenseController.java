@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ufpr.andrekunde.despesasviagem.domain.Expense;
+import ufpr.andrekunde.despesasviagem.domain.Travel;
 import ufpr.andrekunde.despesasviagem.service.ExpenseService;
+import ufpr.andrekunde.despesasviagem.service.TravelService;
 
 @RestController
 @RequestMapping("expenses")
@@ -13,6 +15,7 @@ import ufpr.andrekunde.despesasviagem.service.ExpenseService;
 public class ExpenseController {
 
     private final ExpenseService expenseService;
+    private final TravelService travelService;
 
     @GetMapping
     public ResponseEntity<?> list() {
@@ -66,6 +69,20 @@ public class ExpenseController {
 //            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 //        }
         expenseService.clearTravel(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/{id}/travel/{travelId}")
+    public ResponseEntity<?> expenseToTravel(
+            @PathVariable Long id,
+            @PathVariable Long travelId
+    ) {
+        Expense expense = expenseService.findByIdOrThrowBadRequestException(id);
+        Travel travel = travelService.findByIdOrThrowBadRequestException(travelId);
+        expense.setTravel(travel);
+
+        expenseService.save(expense);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

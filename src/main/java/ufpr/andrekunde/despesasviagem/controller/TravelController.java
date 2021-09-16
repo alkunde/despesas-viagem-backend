@@ -56,6 +56,6 @@ public class TravelController {
 
         travelService.replace(travel);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
