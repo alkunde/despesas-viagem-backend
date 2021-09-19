@@ -1,13 +1,13 @@
-package ufpr.andrekunde.despesasviagem;
+package br.ufpr.andrekunde.travelexpenses;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DespesasDeViagemApplication {
+public class TravelexpensesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DespesasDeViagemApplication.class, args);
+		SpringApplication.run(TravelexpensesApplication.class, args);
 	}
 
 }
