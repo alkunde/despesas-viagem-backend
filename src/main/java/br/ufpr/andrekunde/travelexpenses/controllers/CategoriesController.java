@@ -38,4 +38,32 @@ public class CategoriesController {
 
         return ResponseEntity.status(HttpStatus.OK).body(category);
     }
+
+    @PutMapping
+    public ResponseEntity<Category> update(@RequestBody Category category) {
+        Optional<Category> categoryExistent = repository.findByDescription(category.getDescription());
+
+        if (categoryExistent.isPresent()) {
+            if (categoryExistent.get().getId().equals(category.getId())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            }
+        }
+
+        repository.save(category);
+
+        return ResponseEntity.ok(category);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        Optional<Category> category = repository.findById(id);
+
+        if (!category.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        repository.deleteById(id);
+
+        return ResponseEntity.ok().build();
+    }
 }
