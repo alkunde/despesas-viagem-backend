@@ -23,11 +23,25 @@ public class CategoriesController {
         return repository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> find(@PathVariable Long id) {
+        Optional<Category> category = repository.findById(id);
+
+        return category.map(value -> ResponseEntity.status(HttpStatus.OK).body(value)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/find/{description}")
+    public ResponseEntity<Category> findByDescription(@PathVariable String description) {
+        Optional<Category> category = repository.findByDescriptionIgnoreCase(description);
+
+        return category.map(value -> ResponseEntity.status(HttpStatus.OK).body(value)).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity<Category> create(@RequestBody CreateCategoryDTO createCategoryDTO) {
         String description = createCategoryDTO.getDescription();
 
-        Optional<Category> categoryExistent = repository.findByDescription(description);
+        Optional<Category> categoryExistent = repository.findByDescriptionIgnoreCase(description);
 
         if (categoryExistent.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -41,7 +55,7 @@ public class CategoriesController {
 
     @PutMapping
     public ResponseEntity<Category> update(@RequestBody Category category) {
-        Optional<Category> categoryExistent = repository.findByDescription(category.getDescription());
+        Optional<Category> categoryExistent = repository.findByDescriptionIgnoreCase(category.getDescription());
 
         if (categoryExistent.isPresent()) {
             if (categoryExistent.get().getId().equals(category.getId())) {

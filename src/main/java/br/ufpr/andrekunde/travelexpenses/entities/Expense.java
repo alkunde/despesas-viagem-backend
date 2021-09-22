@@ -9,12 +9,14 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(scale = 2, precision = 10)
+    @Column(precision = 10, scale = 2)
     private Double amount;
 
     private String description;
 
-    private String category;
+    @ManyToOne()
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
 
     public Expense() {}
 
@@ -22,7 +24,7 @@ public class Expense {
             Long id,
             Double amount,
             String description,
-            String category
+            Category category
     ) {
         this.id = id;
         this.amount = amount;
@@ -33,7 +35,7 @@ public class Expense {
     public Expense(
             Double amount,
             String description,
-            String category
+            Category category
     ) {
         this.amount = amount;
         this.description = description;
@@ -64,11 +66,11 @@ public class Expense {
         this.description = description;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
