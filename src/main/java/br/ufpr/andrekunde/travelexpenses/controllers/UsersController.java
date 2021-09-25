@@ -1,7 +1,7 @@
 package br.ufpr.andrekunde.travelexpenses.controllers;
 
 import br.ufpr.andrekunde.travelexpenses.controllers.dto.CreateUserDTO;
-import br.ufpr.andrekunde.travelexpenses.entities.User;
+import br.ufpr.andrekunde.travelexpenses.entities.Users;
 import br.ufpr.andrekunde.travelexpenses.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,19 +19,19 @@ public class UsersController {
     private UsersRepository repository;
 
     @GetMapping
-    public List<User> list() {
+    public List<Users> list() {
         return repository.findAll();
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody CreateUserDTO createUserDTO) {
-        Optional<User> userExistent = repository.findByEmail(createUserDTO.getEmail());
+    public ResponseEntity<Users> create(@RequestBody CreateUserDTO createUserDTO) {
+        Optional<Users> userExistent = repository.findByEmail(createUserDTO.getEmail());
 
         if (userExistent.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
-        User user = new User(
+        Users user = new Users(
                 createUserDTO.getName(),
                 createUserDTO.getEmail(),
                 createUserDTO.getPassword()

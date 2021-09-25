@@ -19,6 +19,10 @@ public class Travel {
 
     private String reason;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "user_id")
+    private Users user;
+
     public Travel() {}
 
     public Travel(
@@ -27,7 +31,8 @@ public class Travel {
             String origin,
             String destination,
             Double amount,
-            String reason
+            String reason,
+            Users user
     ) {
         this.id = id;
         this.status = status;
@@ -35,6 +40,7 @@ public class Travel {
         this.destination = destination;
         this.amount = amount;
         this.reason = reason;
+        this.user = user;
     }
 
     public Travel(
@@ -42,13 +48,15 @@ public class Travel {
             String origin,
             String destination,
             Double amount,
-            String reason
+            String reason,
+            Users user
     ) {
         this.status = status;
         this.origin = origin;
         this.destination = destination;
         this.amount = amount;
         this.reason = reason;
+        this.user = user;
     }
 
     public Long getId() {
@@ -99,6 +107,14 @@ public class Travel {
         this.reason = reason;
     }
 
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -110,6 +126,7 @@ public class Travel {
         result = prime * result + ((destination == null) ? 0 : destination.hashCode());
         result = prime * result + ((amount == null) ? 0 : amount.hashCode());
         result = prime * result + ((reason == null) ? 0 : reason.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
 
         return result;
     }
@@ -170,6 +187,14 @@ public class Travel {
                 return false;
             }
         } else if (!reason.equals(travel.reason)) {
+            return false;
+        }
+
+        if (user == null) {
+            if (travel.user != null) {
+                return false;
+            }
+        } else if (!user.equals(travel.user)) {
             return false;
         }
 

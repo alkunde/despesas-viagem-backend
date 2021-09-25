@@ -1,11 +1,11 @@
 package br.ufpr.andrekunde.travelexpenses.repositories;
 
-import br.ufpr.andrekunde.travelexpenses.entities.User;
+import br.ufpr.andrekunde.travelexpenses.entities.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UsersRepository extends JpaRepository<User, Long> {
+public interface UsersRepository extends JpaRepository<Users, Long> {
 
-    Optional<User> findByEmail(String email);
+    Optional<Users> findByEmail(String email);
 }

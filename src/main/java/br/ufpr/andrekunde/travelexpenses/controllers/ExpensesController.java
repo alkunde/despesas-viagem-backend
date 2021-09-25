@@ -2,7 +2,9 @@ package br.ufpr.andrekunde.travelexpenses.controllers;
 
 import br.ufpr.andrekunde.travelexpenses.controllers.dto.CreateExpenseDTO;
 import br.ufpr.andrekunde.travelexpenses.entities.Expense;
+import br.ufpr.andrekunde.travelexpenses.entities.Users;
 import br.ufpr.andrekunde.travelexpenses.repositories.ExpensesRepository;
+import br.ufpr.andrekunde.travelexpenses.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +18,30 @@ import java.util.Optional;
 public class ExpensesController {
 
     @Autowired
-    private ExpensesRepository repository;
+    private ExpensesRepository expensesRepository;
+
+    @Autowired
+    private UsersRepository usersRepository;
 
     @GetMapping
-    public List<Expense> list() {
-        return repository.findAll();
+    public ResponseEntity<List<Expense>> list() {
+        return ResponseEntity.ok(expensesRepository.findAll());
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<List<Expense>> listByUser(@PathVariable Long id) {
+        Optional<Users> user = usersRepository.findById(id);
+
+        if (!user.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(expensesRepository.findByUser(user.get()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Expense> find(@PathVariable Long id) {
-        Optional<Expense> expense = repository.findById(id);
+        Optional<Expense> expense = expensesRepository.findById(id);
 
         return expense.map(value -> ResponseEntity.status(HttpStatus.OK).body(value)).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -35,10 +51,11 @@ public class ExpensesController {
         Expense expense = new Expense(
                 createExpenseDTO.getAmount(),
                 createExpenseDTO.getDescription(),
-                createExpenseDTO.getCategory()
+                createExpenseDTO.getCategory(),
+                createExpenseDTO.getUser()
         );
 
-        repository.save(expense);
+        expensesRepository.save(expense);
 
         return ResponseEntity.status(HttpStatus.OK).body(expense);
     }
@@ -48,7 +65,7 @@ public class ExpensesController {
             @PathVariable Long id,
             @RequestBody CreateExpenseDTO createExpenseDTO
     ) {
-        Optional<Expense> expenseExistent = repository.findById(id);
+        Optional<Expense> expenseExistent = expensesRepository.findById(id);
 
         if (!expenseExistent.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -56,23 +73,22 @@ public class ExpensesController {
 
         Expense expense = expenseExistent.get();
         expense.setDescription(createExpenseDTO.getDescription());
-        expense.setCategory(createExpenseDTO.getCategory());
         expense.setAmount(createExpenseDTO.getAmount());
 
-        repository.save(expense);
+        expensesRepository.save(expense);
 
         return ResponseEntity.status(HttpStatus.OK).body(expense);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        Optional<Expense> expense = repository.findById(id);
+        Optional<Expense> expense = expensesRepository.findById(id);
 
         if (!expense.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
-        repository.deleteById(id);
+        expensesRepository.deleteById(id);
 
         return ResponseEntity.ok().build();
     }

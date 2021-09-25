@@ -1,6 +1,7 @@
 package br.ufpr.andrekunde.travelexpenses.entities;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Expense {
@@ -13,10 +14,16 @@ public class Expense {
     private Double amount;
 
     private String description;
+    private @Temporal(TemporalType.DATE)
+    Date expenseDate;
 
-    @ManyToOne()
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "user_id")
+    private Users user;
 
     public Expense() {}
 
@@ -24,22 +31,30 @@ public class Expense {
             Long id,
             Double amount,
             String description,
-            Category category
+            Date expenseDate,
+            Category category,
+            Users user
     ) {
         this.id = id;
         this.amount = amount;
         this.description = description;
+        this.expenseDate = expenseDate;
         this.category = category;
+        this.user = user;
     }
 
     public Expense(
             Double amount,
             String description,
-            Category category
+            Date expenseDate,
+            Category category,
+            Users user
     ) {
         this.amount = amount;
         this.description = description;
+        this.expenseDate = expenseDate;
         this.category = category;
+        this.user = user;
     }
 
     public Long getId() {
@@ -66,12 +81,28 @@ public class Expense {
         this.description = description;
     }
 
+    public Date getExpenseDate() {
+        return expenseDate;
+    }
+
+    public void setExpenseDate(Date expenseDate) {
+        this.expenseDate = expenseDate;
+    }
+
     public Category getCategory() {
         return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     @Override
@@ -82,7 +113,9 @@ public class Expense {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((amount == null) ? 0 : amount.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((expenseDate == null) ? 0 : expenseDate.hashCode());
         result = prime * result + ((category == null) ? 0 : category.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
 
         return result;
     }
@@ -122,11 +155,27 @@ public class Expense {
             return false;
         }
 
+        if (expenseDate == null) {
+            if (expense.expenseDate != null) {
+                return false;
+            }
+        } else if (!expenseDate.equals(expense.expenseDate)) {
+            return false;
+        }
+
         if (category == null) {
             if (expense.category != null) {
                 return false;
             }
         } else if (!category.equals(expense.category)) {
+            return false;
+        }
+
+        if (user == null) {
+            if (expense.user != null) {
+                return false;
+            }
+        } else if (!user.equals(expense.user)) {
             return false;
         }
 

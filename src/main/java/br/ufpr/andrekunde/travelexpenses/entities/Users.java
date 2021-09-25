@@ -3,7 +3,7 @@ package br.ufpr.andrekunde.travelexpenses.entities;
 import javax.persistence.*;
 
 @Entity
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,12 +13,11 @@ public class User {
 
     @Column(unique = true)
     private String email;
-
     private String password;
 
-    public User() {}
+    public Users() {}
 
-    public User(
+    public Users(
             Long id,
             String name,
             String email,
@@ -30,7 +29,7 @@ public class User {
         this.password = password;
     }
 
-    public User(
+    public Users(
             String name,
             String email,
             String password
@@ -95,7 +94,7 @@ public class User {
             return false;
         }
 
-        User user = (User) obj;
+        Users user = (Users) obj;
         if (id == null) {
             if (user.id != null) {
                 return false;
