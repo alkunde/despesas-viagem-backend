@@ -4,6 +4,7 @@ import br.ufpr.andrekunde.travelexpenses.controllers.dto.CreateCategoryDTO;
 import br.ufpr.andrekunde.travelexpenses.entities.Category;
 import br.ufpr.andrekunde.travelexpenses.repositories.CategoriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class CategoriesController {
     private CategoriesRepository repository;
 
     @GetMapping
-    public List<Category> list() {
-        return repository.findAll();
+    public ResponseEntity<List<Category>> list() {
+        return ResponseEntity.ok(repository.findAll(Sort.by(Sort.Direction.ASC, "description")));
     }
 
     @GetMapping("/{id}")

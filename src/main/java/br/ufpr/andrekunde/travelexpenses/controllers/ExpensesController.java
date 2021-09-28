@@ -76,6 +76,13 @@ public class ExpensesController {
         Expense expense = expenseExistent.get();
         expense.setDescription(createExpenseDTO.getDescription());
         expense.setAmount(createExpenseDTO.getAmount());
+        expense.setExpenseDate(
+                new Date(
+                        createExpenseDTO.getYear() - 1900,
+                        createExpenseDTO.getMonth() - 1,
+                        createExpenseDTO.getDay()
+                )
+        );
 
         expensesRepository.save(expense);
 
