@@ -7,6 +7,7 @@ public class CreateExpenseDTO {
 
     private Double amount;
     private String description;
+    private int year, month, day;
     private Category category;
     private Users user;
 
@@ -16,6 +17,18 @@ public class CreateExpenseDTO {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
     }
 
     public Category getCategory() {
