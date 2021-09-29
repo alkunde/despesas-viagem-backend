@@ -8,6 +8,7 @@ public class SessionResponseDTO implements Serializable {
     private String name;
     private String email;
     private Boolean isAdmin;
+    private Boolean isActive;
 
     public SessionResponseDTO() { }
 
@@ -15,12 +16,14 @@ public class SessionResponseDTO implements Serializable {
             Long id,
             String name,
             String email,
-            Boolean isAdmin
+            Boolean isAdmin,
+            Boolean isActive
     ) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.isAdmin = isAdmin;
+        this.isActive = isActive;
     }
 
     public Long getId() {
@@ -47,11 +50,19 @@ public class SessionResponseDTO implements Serializable {
         this.email = email;
     }
 
-    public Boolean getIsAdmin() {
+    public Boolean getAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }

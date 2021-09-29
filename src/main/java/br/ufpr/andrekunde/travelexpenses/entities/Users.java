@@ -14,6 +14,8 @@ public class Users {
     @Column(unique = true)
     private String email;
     private String password;
+    private String role;
+    private String active;
 
     public Users() {}
 
@@ -21,22 +23,30 @@ public class Users {
             Long id,
             String name,
             String email,
-            String password
+            String password,
+            String role,
+            String active
     ) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
+        this.active = active;
     }
 
     public Users(
             String name,
             String email,
-            String password
+            String password,
+            String role,
+            String active
     ) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
+        this.active = active;
     }
 
     public Long getId() {
@@ -71,6 +81,22 @@ public class Users {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -80,6 +106,8 @@ public class Users {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
+        result = prime * result + ((role == null) ? 0 : role.hashCode());
+        result = prime * result + ((active == null) ? 0 : active.hashCode());
 
         return result;
     }
@@ -124,6 +152,22 @@ public class Users {
                 return false;
             }
         } else if (!password.equals(user.password)) {
+            return false;
+        }
+
+        if (role == null) {
+            if (user.role != null) {
+                return false;
+            }
+        } else if (!role.equals(user.role)) {
+            return false;
+        }
+
+        if (active == null) {
+            if (user.active != null) {
+                return false;
+            }
+        } else if (!active.equals(user.active)) {
             return false;
         }
 

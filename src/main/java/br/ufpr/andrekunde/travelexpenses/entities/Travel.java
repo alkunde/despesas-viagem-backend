@@ -1,6 +1,7 @@
 package br.ufpr.andrekunde.travelexpenses.entities;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Travel {
@@ -17,6 +18,12 @@ public class Travel {
     @Column(precision = 10, scale = 2)
     private Double amount;
 
+    private @Temporal(TemporalType.DATE)
+    Date departureDate;
+
+    private @Temporal(TemporalType.DATE)
+    Date arrivalDate;
+
     private String reason;
 
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -31,6 +38,8 @@ public class Travel {
             String origin,
             String destination,
             Double amount,
+            Date departureDate,
+            Date arrivalDate,
             String reason,
             Users user
     ) {
@@ -39,6 +48,8 @@ public class Travel {
         this.origin = origin;
         this.destination = destination;
         this.amount = amount;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
         this.reason = reason;
         this.user = user;
     }
@@ -48,6 +59,8 @@ public class Travel {
             String origin,
             String destination,
             Double amount,
+            Date departureDate,
+            Date arrivalDate,
             String reason,
             Users user
     ) {
@@ -55,6 +68,8 @@ public class Travel {
         this.origin = origin;
         this.destination = destination;
         this.amount = amount;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
         this.reason = reason;
         this.user = user;
     }
@@ -99,6 +114,22 @@ public class Travel {
         this.amount = amount;
     }
 
+    public Date getDepartureDate() {
+        return departureDate;
+    }
+
+    public void setDepartureDate(Date departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public Date getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate(Date arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
     public String getReason() {
         return reason;
     }
@@ -125,6 +156,8 @@ public class Travel {
         result = prime * result + ((origin == null) ? 0 : origin.hashCode());
         result = prime * result + ((destination == null) ? 0 : destination.hashCode());
         result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+        result = prime * result + ((departureDate == null) ? 0 : departureDate.hashCode());
+        result = prime * result + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
         result = prime * result + ((reason == null) ? 0 : reason.hashCode());
         result = prime * result + ((user == null) ? 0 : user.hashCode());
 
@@ -179,6 +212,22 @@ public class Travel {
                 return false;
             }
         } else if (!amount.equals(travel.amount)) {
+            return false;
+        }
+
+        if (departureDate == null) {
+            if (travel.departureDate != null) {
+                return false;
+            }
+        } else if (!departureDate.equals(travel.departureDate)) {
+            return false;
+        }
+
+        if (arrivalDate == null) {
+            if (travel.arrivalDate != null) {
+                return false;
+            }
+        } else if (!arrivalDate.equals(travel.arrivalDate)) {
             return false;
         }
 
