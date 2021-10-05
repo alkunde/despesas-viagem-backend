@@ -25,17 +25,19 @@ public class Expense {
     @JoinColumn(name = "user_id")
     private Users user;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "travel_id")
+    private Travel travel;
+
     public Expense() {}
 
     public Expense(
-            Long id,
             Double amount,
             String description,
             Date expenseDate,
             Category category,
             Users user
     ) {
-        this.id = id;
         this.amount = amount;
         this.description = description;
         this.expenseDate = expenseDate;
@@ -48,13 +50,36 @@ public class Expense {
             String description,
             Date expenseDate,
             Category category,
+            Users user,
+            Travel travel
+    ) {
+        this(amount, description, expenseDate, category, user);
+        this.travel = travel;
+    }
+
+    public Expense(
+            Long id,
+            Double amount,
+            String description,
+            Date expenseDate,
+            Category category,
             Users user
     ) {
-        this.amount = amount;
-        this.description = description;
-        this.expenseDate = expenseDate;
-        this.category = category;
-        this.user = user;
+        this(amount, description, expenseDate, category, user);
+        this.id = id;
+    }
+
+    public Expense(
+            Long id,
+            Double amount,
+            String description,
+            Date expenseDate,
+            Category category,
+            Users user,
+            Travel travel
+    ) {
+        this(id, amount, description, expenseDate, category, user);
+        this.travel = travel;
     }
 
     public Long getId() {
@@ -105,6 +130,14 @@ public class Expense {
         this.user = user;
     }
 
+    public Travel getTravel() {
+        return travel;
+    }
+
+    public void setTravel(Travel travel) {
+        this.travel = travel;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -116,6 +149,7 @@ public class Expense {
         result = prime * result + ((expenseDate == null) ? 0 : expenseDate.hashCode());
         result = prime * result + ((category == null) ? 0 : category.hashCode());
         result = prime * result + ((user == null) ? 0 : user.hashCode());
+        result = prime * result + ((travel == null) ? 0 : travel.hashCode());
 
         return result;
     }
@@ -176,6 +210,14 @@ public class Expense {
                 return false;
             }
         } else if (!user.equals(expense.user)) {
+            return false;
+        }
+
+        if (travel == null) {
+            if (expense.travel != null) {
+                return false;
+            }
+        } else if (!travel.equals(expense.travel)) {
             return false;
         }
 
