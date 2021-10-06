@@ -14,7 +14,7 @@ public class Expense {
     private Double amount;
 
     private String description;
-    private @Temporal(TemporalType.DATE)
+    private @Temporal(TemporalType.TIMESTAMP)
     Date expenseDate;
 
     @ManyToOne(cascade = CascadeType.MERGE)

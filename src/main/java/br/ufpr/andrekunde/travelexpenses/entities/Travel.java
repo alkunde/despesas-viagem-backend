@@ -18,10 +18,10 @@ public class Travel {
     @Column(precision = 10, scale = 2)
     private Double amount;
 
-    private @Temporal(TemporalType.DATE)
+    private @Temporal(TemporalType.TIMESTAMP)
     Date departureDate;
 
-    private @Temporal(TemporalType.DATE)
+    private @Temporal(TemporalType.TIMESTAMP)
     Date arrivalDate;
 
     private String reason;
