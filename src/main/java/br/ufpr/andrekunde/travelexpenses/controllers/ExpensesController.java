@@ -57,8 +57,23 @@ public class ExpensesController {
         return expense.map(value -> ResponseEntity.status(HttpStatus.OK).body(value)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PatchMapping("/{expenseId}/clear-travel")
+    public ResponseEntity<?> removeTravelFromExpense(@PathVariable Long expenseId) {
+        Optional<Expense> expense = expensesRepository.findById(expenseId);
+
+        if (!expense.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Expense expenseExistent = expense.get();
+        expenseExistent.setTravel(null);
+        expensesRepository.save(expenseExistent);
+
+        return ResponseEntity.ok().build();
+    }
+
     @PatchMapping("/{expenseId}/travel/{travelId}")
-    public ResponseEntity<?> patchTravelToExpense(
+    public ResponseEntity<?> addTravelToExpense(
             @PathVariable Long expenseId,
             @PathVariable Long travelId
     ) {
@@ -110,6 +125,7 @@ public class ExpensesController {
         Expense expense = expenseExistent.get();
         expense.setDescription(createExpenseDTO.getDescription());
         expense.setAmount(createExpenseDTO.getAmount());
+        expense.setCategory(createExpenseDTO.getCategory());
         expense.setExpenseDate(
                 new Date(
                         createExpenseDTO.getYear() - 1900,

@@ -25,7 +25,7 @@ public class TravelsController {
     @PostMapping
     public ResponseEntity<Travel> create(@RequestBody CreateTravelDTO createTravelDTO) {
         Travel travel = new Travel(
-                "open",
+                "aberto",
                 createTravelDTO.getOrigin(),
                 createTravelDTO.getDestination(),
                 createTravelDTO.getAmount(),
