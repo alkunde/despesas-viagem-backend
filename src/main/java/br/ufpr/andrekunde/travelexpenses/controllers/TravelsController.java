@@ -32,6 +32,7 @@ public class TravelsController {
                 new Date(createTravelDTO.getDepartureYear() - 1900, createTravelDTO.getDepartureMonth() - 1, createTravelDTO.getDepartureDay()),
                 new Date(createTravelDTO.getArrivalYear() - 1900, createTravelDTO.getArrivalMonth() - 1, createTravelDTO.getArrivalDay()),
                 createTravelDTO.getReason(),
+                createTravelDTO.getCostCenter(),
                 createTravelDTO.getUser()
         );
 

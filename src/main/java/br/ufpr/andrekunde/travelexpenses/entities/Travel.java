@@ -27,6 +27,10 @@ public class Travel {
     private String reason;
 
     @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "cost_center_id")
+    private CostCenter costCenter;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private Users user;
 
@@ -41,6 +45,7 @@ public class Travel {
             Date departureDate,
             Date arrivalDate,
             String reason,
+            CostCenter costCenter,
             Users user
     ) {
         this.id = id;
@@ -51,6 +56,7 @@ public class Travel {
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
         this.reason = reason;
+        this.costCenter = costCenter;
         this.user = user;
     }
 
@@ -62,6 +68,7 @@ public class Travel {
             Date departureDate,
             Date arrivalDate,
             String reason,
+            CostCenter costCenter,
             Users user
     ) {
         this.status = status;
@@ -71,6 +78,7 @@ public class Travel {
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
         this.reason = reason;
+        this.costCenter = costCenter;
         this.user = user;
     }
 
@@ -138,6 +146,14 @@ public class Travel {
         this.reason = reason;
     }
 
+    public CostCenter getCostCenter() {
+        return costCenter;
+    }
+
+    public void setCostCenter(CostCenter costCenter) {
+        this.costCenter = costCenter;
+    }
+
     public Users getUser() {
         return user;
     }
@@ -159,6 +175,7 @@ public class Travel {
         result = prime * result + ((departureDate == null) ? 0 : departureDate.hashCode());
         result = prime * result + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
         result = prime * result + ((reason == null) ? 0 : reason.hashCode());
+        result = prime * result + ((costCenter == null) ? 0 : costCenter.hashCode());
         result = prime * result + ((user == null) ? 0 : user.hashCode());
 
         return result;
@@ -236,6 +253,14 @@ public class Travel {
                 return false;
             }
         } else if (!reason.equals(travel.reason)) {
+            return false;
+        }
+
+        if (costCenter == null) {
+            if (travel.costCenter != null) {
+                return false;
+            }
+        } else if (!costCenter.equals(travel.costCenter)) {
             return false;
         }
 

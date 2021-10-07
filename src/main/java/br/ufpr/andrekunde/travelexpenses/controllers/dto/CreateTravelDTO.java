@@ -1,5 +1,6 @@
 package br.ufpr.andrekunde.travelexpenses.controllers.dto;
 
+import br.ufpr.andrekunde.travelexpenses.entities.CostCenter;
 import br.ufpr.andrekunde.travelexpenses.entities.Users;
 
 public class CreateTravelDTO {
@@ -10,6 +11,7 @@ public class CreateTravelDTO {
     private int arrivalYear, arrivalMonth, arrivalDay;
     private Double amount;
     private String reason;
+    private CostCenter costCenter;
     private Users user;
 
     public String getOrigin() {
@@ -50,6 +52,10 @@ public class CreateTravelDTO {
 
     public String getReason() {
         return reason;
+    }
+
+    public CostCenter getCostCenter() {
+        return costCenter;
     }
 
     public Users getUser() {
