@@ -12,15 +12,28 @@ public class Category {
     @Column(unique = true)
     private String description;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "ledger_account_id")
+    private LedgerAccount ledgerAccount;
+
     public Category() {}
 
-    public Category(Long id, String description) {
+    public Category(
+            Long id,
+            String description,
+            LedgerAccount ledgerAccount
+    ) {
         this.id = id;
         this.description = description;
+        this.ledgerAccount = ledgerAccount;
     }
 
-    public Category(String description) {
+    public Category(
+            String description,
+            LedgerAccount ledgerAccount
+    ) {
         this.description = description;
+        this.ledgerAccount = ledgerAccount;
     }
 
     public Long getId() {
@@ -39,6 +52,14 @@ public class Category {
         this.description = description;
     }
 
+    public LedgerAccount getLedgerAccount() {
+        return ledgerAccount;
+    }
+
+    public void setLedgerAccount(LedgerAccount ledgerAccount) {
+        this.ledgerAccount = ledgerAccount;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -46,6 +67,7 @@ public class Category {
 
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((ledgerAccount == null) ? 0 : ledgerAccount.hashCode());
 
         return result;
     }
@@ -66,6 +88,14 @@ public class Category {
                 return false;
             }
         } else if (!id.equals(category.id)) {
+            return false;
+        }
+
+        if (ledgerAccount == null) {
+            if (category.ledgerAccount != null) {
+                return false;
+            }
+        } else if (!ledgerAccount.equals(category.ledgerAccount)) {
             return false;
         }
 

@@ -40,15 +40,16 @@ public class CategoriesController {
 
     @PostMapping
     public ResponseEntity<Category> create(@RequestBody CreateCategoryDTO createCategoryDTO) {
-        String description = createCategoryDTO.getDescription();
-
-        Optional<Category> categoryExistent = repository.findByDescriptionIgnoreCase(description);
+        Optional<Category> categoryExistent = repository.findByDescriptionIgnoreCase(createCategoryDTO.getDescription());
 
         if (categoryExistent.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
-        Category category = new Category(createCategoryDTO.getDescription());
+        Category category = new Category(
+                createCategoryDTO.getDescription(),
+                createCategoryDTO.getLedgerAccount()
+        );
         repository.save(category);
 
         return ResponseEntity.status(HttpStatus.OK).body(category);
