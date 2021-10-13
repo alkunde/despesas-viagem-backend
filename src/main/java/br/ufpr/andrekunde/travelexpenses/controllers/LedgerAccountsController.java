@@ -52,4 +52,18 @@ public class LedgerAccountsController {
 
         return ResponseEntity.ok(newAccount);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<LedgerAccount> update(
+            @PathVariable Long id,
+            @RequestBody CreateLedgerAccountDTO createLedgerAccountDTO
+    ) {
+        Optional<LedgerAccount> ledgerAccount = repository.findById(id);
+
+        if (!ledgerAccount.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(ledgerAccount.get());
+    }
 }
