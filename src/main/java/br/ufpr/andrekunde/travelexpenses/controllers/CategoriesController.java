@@ -56,11 +56,13 @@ public class CategoriesController {
     }
 
     @PutMapping
-    public ResponseEntity<Category> update(@RequestBody Category category) {
+    public ResponseEntity<Category> update(
+            @RequestBody Category category
+    ) {
         Optional<Category> categoryExistent = repository.findByDescriptionIgnoreCase(category.getDescription());
 
         if (categoryExistent.isPresent()) {
-            if (categoryExistent.get().getId().equals(category.getId())) {
+            if (!categoryExistent.get().getId().equals(category.getId())) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }
         }
