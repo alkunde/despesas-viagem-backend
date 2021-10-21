@@ -39,6 +39,19 @@ public class ExpensesController {
         return ResponseEntity.ok(expensesRepository.findWithoutTravel());
     }
 
+    @GetMapping("/travel/{travelId}")
+    public ResponseEntity<List<Expense>> listByTravel(@PathVariable Long travelId) {
+        Optional<Travel> travel = travelsRepository.findById(travelId);
+
+        if (!travel.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Expense> expenses = expensesRepository.findByTravel(travel.get());
+
+        return ResponseEntity.ok(expenses);
+    }
+
     @GetMapping("/users/{id}")
     public ResponseEntity<List<Expense>> listByUser(@PathVariable Long id) {
         Optional<Users> user = usersRepository.findById(id);
