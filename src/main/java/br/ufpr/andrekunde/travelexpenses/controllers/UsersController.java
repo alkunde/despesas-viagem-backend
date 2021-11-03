@@ -55,4 +55,32 @@ public class UsersController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
+
+    @PatchMapping("/{id}/inactive")
+    public ResponseEntity<List<Users>> inactivateUser(@PathVariable Long id) {
+        Optional<Users> userExists = repository.findById(id);
+        if (!userExists.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Users user = userExists.get();
+        user.setActive("inactive");
+        repository.save(user);
+
+        return ResponseEntity.ok(repository.findAll(Sort.by(Sort.Direction.ASC, "name")));
+    }
+
+    @PatchMapping("/{id}/active")
+    public ResponseEntity<List<Users>> activateUser(@PathVariable Long id) {
+        Optional<Users> userExists = repository.findById(id);
+        if (!userExists.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Users user = userExists.get();
+        user.setActive("active");
+        repository.save(user);
+
+        return ResponseEntity.ok(repository.findAll(Sort.by(Sort.Direction.ASC, "name")));
+    }
 }

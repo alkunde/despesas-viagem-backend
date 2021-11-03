@@ -27,6 +27,10 @@ public class SessionsController {
             return ResponseEntity.notFound().build();
         }
 
+        if (user.get().getActive().equals("inactive")) {
+            return ResponseEntity.notFound().build();
+        }
+
         if (!user.get().getPassword().equals(sessionDTO.getPassword())) {
             return  ResponseEntity.notFound().build();
         }
