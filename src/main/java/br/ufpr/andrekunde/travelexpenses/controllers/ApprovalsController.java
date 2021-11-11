@@ -19,7 +19,7 @@ public class ApprovalsController {
 
     @GetMapping
     public ResponseEntity<List<Travel>> list() {
-        List<Travel> travels = travelsRepository.findByStatus("em aprovação");
+        List<Travel> travels = travelsRepository.findAll();
 
         return ResponseEntity.ok(travels);
     }
